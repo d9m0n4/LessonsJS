@@ -46,8 +46,8 @@ function showTypeOf (data){
 showTypeOf(money);
 showTypeOf(income);
 showTypeOf(deposit);
-//-----------------------//
 
+//----- консоль лог----//
 console.log('Расходы за месяц: ' + getExpensesMonth());
 console.log(addExpenses.toLowerCase().split(' '));
 console.log('Срок достижения цели: ' + getTargetMonth() + ' месяц');
