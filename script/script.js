@@ -2,10 +2,9 @@
 
 let money,
     start = function() {
-      do {
+      while (!money){
         money = +prompt('Ваш месячный доход?');
       }
-      while (isNaN(money) || money.trim === '' || money === null);
 };
 start();
 
@@ -31,9 +30,9 @@ let appData = {
               while (!isNaN(itemIncome) || itemIncome.trim === '' || itemIncome === null){
                   itemIncome = prompt('Какой у вас дополнительный заработок?');
                 }
-              let cashIncome = prompt('Сколько в месяц вы на этом зарабатываете?');
-                while (isNaN(cashIncome) || cashIncome.trim === '' || cashIncome === null) {
-                  cashIncome = prompt('Сколько в месяц вы на этом зарабатываете?');
+              let cashIncome = +prompt('Сколько в месяц вы на этом зарабатываете?');
+                while (!cashIncome) {
+                  cashIncome = +prompt('Сколько в месяц вы на этом зарабатываете?');
                 }
                 appData.income[itemIncome] = cashIncome;
             }
@@ -48,7 +47,7 @@ let appData = {
                           quest = prompt('Введите обязательную статью расходов?');
                         }
                           let price = +prompt('Во сколько это обойдется?');
-                        while (isNaN(price) || price.trim === '' || price === null) {
+                        while (!price) {
                           price = +prompt('Во сколько это обойдется?');
                         }
                         appData.expenses[quest] = price;
@@ -91,11 +90,11 @@ let appData = {
       appData.deposit = confirm('Есть ли у вас депозит в банке?');
       if (appData.deposit){
         appData.percentDeposit = prompt('Какой годовой процент?');
-          while (isNaN(appData.percentDeposit) || appData.percentDeposit.trim === '' || appData.percentDeposit === null){
+          while (!appData.percentDeposit){
             appData.percentDeposit = prompt('Какой годовой процент?');
           }
         appData.moneyDeposit = prompt('Какая сумма заложена?');
-        while (isNaN(appData.moneyDeposit) || appData.moneyDeposit.trim === '' || appData.moneyDeposit === null){
+        while (!appData.moneyDeposit){
           appData.moneyDeposit = prompt('Какая сумма заложена?');
         }
       }
