@@ -89,13 +89,13 @@ let appData = {
     getInfoDeposit: function(){
       appData.deposit = confirm('Есть ли у вас депозит в банке?');
       if (appData.deposit){
-        appData.percentDeposit = prompt('Какой годовой процент?');
+        appData.percentDeposit = +prompt('Какой годовой процент?');
           while (!appData.percentDeposit){
-            appData.percentDeposit = prompt('Какой годовой процент?');
+            appData.percentDeposit = +prompt('Какой годовой процент?');
           }
-        appData.moneyDeposit = prompt('Какая сумма заложена?');
+        appData.moneyDeposit = +prompt('Какая сумма заложена?');
         while (!appData.moneyDeposit){
-          appData.moneyDeposit = prompt('Какая сумма заложена?');
+          appData.moneyDeposit = +prompt('Какая сумма заложена?');
         }
       }
     },
