@@ -1,8 +1,8 @@
 'usestrict'
 
 let startBtn = document.getElementById('start'),
-  plusIncom = document.getElementsByTagName('button'),
-  plusExpenses = document.getElementsByTagName('button'),
+  plusIncom = document.getElementsByTagName('button')[0],
+  plusExpenses = document.getElementsByTagName('button')[1],
   depositCheck = document.querySelector('#deposit-check'),
   addIncomeItem = document.querySelectorAll('.additional_income-item'),
   budgetMonth = document.getElementsByClassName('budget_month-value'),
