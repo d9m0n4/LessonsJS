@@ -20,7 +20,9 @@ let startBtn = document.getElementById('start'),
     targetAmount = document.querySelector('.target-amount'),
     periodSelect = document.querySelector('.period-select'),
     periodAmount = document.querySelector('.period-amount'),
-    incomeItems = document.querySelectorAll('.income-items');
+    incomeItems = document.querySelectorAll('.income-items'),
+    nameInputs = document.querySelectorAll('input[placeholder = Наименование]'),
+    sumInputs = document.querySelectorAll('input[placeholder = Сумма]');
 
 let appData = {
     income: {},
@@ -40,7 +42,6 @@ let appData = {
         return;
       }
       appData.budget = +salaryAmount.value;
-      console.log(salaryAmount.value);
 
       appData.getExpenses();
       appData.getIncome();
@@ -55,6 +56,10 @@ let appData = {
 
     addExpensesBlock: function(){
       let cloneExpensesItem = expensesItems[0].cloneNode(true);
+      let cloneExpensesInput = cloneExpensesItem.querySelectorAll('input');
+        for(let i = 0; i < cloneExpensesInput.length; i++){
+          cloneExpensesInput[i].value = '';
+        }
       expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
       expensesItems = document.querySelectorAll('.expenses-items');
         if (expensesItems.length === 3){
@@ -72,6 +77,10 @@ let appData = {
     },
     addIncomeBlock: function(){
       let cloneIncomeItem = incomeItems[0].cloneNode(true);
+      let cloneIncomeInput = cloneIncomeItem.querySelectorAll('input');
+        for(let i = 0; i < cloneIncomeInput.length; i++){
+          cloneIncomeInput[i].value = '';
+        }
       incomeItems[0].parentNode.insertBefore(cloneIncomeItem, incomePlus);
       incomeItems = document.querySelectorAll('.income-items');
         if(incomeItems.length === 3){
@@ -177,6 +186,18 @@ let appData = {
     }
 
 };
+
+nameInputs.forEach(function(item){
+  item.addEventListener('input', function(){
+    item.value = item.value.replace(/[^а-яА-ЯёЁ.,!?"":;-\s]/g, '')
+  })
+})
+
+sumInputs.forEach(function(item){
+  item.addEventListener('input', function(){
+    item.value = item.value.replace(/\D/, '')
+  })
+})
 
 startBtn.addEventListener('click', appData.start)
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
