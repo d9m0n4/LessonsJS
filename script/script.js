@@ -91,7 +91,7 @@ let appData = {
         let itemExpenses = item.querySelector('.expenses-title').value;
         let cacheExpenses = item.querySelector('.expenses-amount').value;
           if(item !== '' && cacheExpenses !== ''){
-            appData.expenses[itemExpenses] = +cacheExpenses;
+            this.expenses[itemExpenses] = +cacheExpenses;
           }
       });
     },
@@ -116,7 +116,7 @@ let appData = {
         let incomeTitle = item.querySelector('.income-title').value;
         let incomeAmount = item.querySelector('.income-amount').value;
           if(incomeTitle !== '' && incomeAmount !== ''){
-            appData.income[incomeTitle] = +incomeAmount;
+            this.income[incomeTitle] = +incomeAmount;
           }
       });
       for (const key in this.income) {
