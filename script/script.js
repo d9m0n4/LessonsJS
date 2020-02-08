@@ -50,10 +50,13 @@ let appData = {
       cancel.style.display = 'block';
       startBtn.style.display = 'none';
 
-      
-      leftInps.forEach(function (item) {
-        item.setAttribute('disabled', '1');
-      });
+      let inpss = document.querySelectorAll('input[type = text]');
+      for(let i = 0; i < inpss.length; i++){
+        inpss[i].setAttribute('disabled', '1');
+      }
+      // leftInps.forEach(function (item) {
+      //   item.setAttribute('disabled', '1');
+      // });
 
       pluses.forEach(function (item) {
         item.setAttribute('disabled', true);
@@ -91,7 +94,7 @@ let appData = {
         let itemExpenses = item.querySelector('.expenses-title').value;
         let cacheExpenses = item.querySelector('.expenses-amount').value;
           if(item !== '' && cacheExpenses !== ''){
-            this.expenses[itemExpenses] = +cacheExpenses;
+            appData.expenses[itemExpenses] = +cacheExpenses;
           }
       });
     },
@@ -116,7 +119,7 @@ let appData = {
         let incomeTitle = item.querySelector('.income-title').value;
         let incomeAmount = item.querySelector('.income-amount').value;
           if(incomeTitle !== '' && incomeAmount !== ''){
-            this.income[incomeTitle] = +incomeAmount;
+            appData.income[incomeTitle] = +incomeAmount;
           }
       });
       for (const key in this.income) {
