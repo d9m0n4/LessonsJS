@@ -89,7 +89,7 @@ AppData.prototype.addExpensesBlock = function () {
     }
     nameInputs = data.querySelectorAll('input[placeholder=Наименование]');
     sumInputs = data.querySelectorAll('input[placeholder=Сумма]');
-    ruItems();
+    this.ruItems();
   };
   AppData.prototype.getExpenses = function () {
     let _this = this;
@@ -115,7 +115,7 @@ AppData.prototype.addExpensesBlock = function () {
 
     nameInputs = data.querySelectorAll('input[placeholder=Наименование]');
     sumInputs = data.querySelectorAll('input[placeholder=Сумма]');
-    ruItems();
+    this.ruItems();
   };
   AppData.prototype.getIncome = function () {
     let _this = this;
@@ -153,7 +153,7 @@ AppData.prototype.addExpensesBlock = function () {
         _this.addExpenses.push(item);
       }
     });
-    arrToStr();
+    this.arrToStr();
   };
   AppData.prototype.getAddIncome = function () {
     let _this = this;
@@ -246,36 +246,7 @@ AppData.prototype.addExpensesBlock = function () {
     return this.budgetMonth * periodSelect.value;
   };
 
-  AppData.prototype.eventsListeners = function () {
-    cancel.addEventListener('click', appData.reset.bind(appData));
-    startBtn.addEventListener('click', appData.start.bind(appData));
-    expensesPlus.addEventListener('click', appData.addExpensesBlock.bind(appData.ruItems));
-    incomePlus.addEventListener('click', appData.addIncomeBlock);
-    periodSelect.addEventListener('change', appData.changePeriod);
-  };
-
-
-let appData = new AppData();
-
-appData.eventsListeners();
-
-console.log(appData);
-
-
-
-
-
-
-
-function arrToStr() {
-  let expToStr = appData.addExpenses.map(function (item) {
-    return item.slice(0, 1).toUpperCase() + item.slice(1);
-  });
-  let comma = expToStr.join(', ');
-  additionalExpenses.value = comma;
-}
-
-function ruItems() {
+  AppData.prototype.ruItems = function() {
   nameInputs.forEach(function (item) {
     item.addEventListener('input', function () {
       item.value = item.value.replace(/[^а-яА-ЯёЁ .?!,]/i, '');
@@ -286,9 +257,43 @@ function ruItems() {
       item.value = item.value.replace(/[\D]/i, '');
     });
   });
-}
+    
+};
+AppData.prototype.arrToStr = function() {
+  let expToStr = this.addExpenses.map(function (item) {
+    return item.slice(0, 1).toUpperCase() + item.slice(1);
+  });
+  let comma = expToStr.join(', ');
+  additionalExpenses.value = comma;
+};
 
-ruItems();
+
+
+AppData.prototype.eventsListeners = function () {
+  cancel.addEventListener('click', this.reset.bind(this));
+  startBtn.addEventListener('click', this.start.bind(this));
+  expensesPlus.addEventListener('click', this.addExpensesBlock.bind(this.ruItems));
+  incomePlus.addEventListener('click', this.addIncomeBlock);
+  periodSelect.addEventListener('change', this.changePeriod);
+};
+
+
+let appData = new AppData();
+
+appData.ruItems();
+appData.eventsListeners();
+
+console.log(appData);
+
+
+
+
+
+
+
+
+
+
 
 
 // appData.ruItems();
