@@ -84,6 +84,12 @@ class AppData {
 
     items[0].parentNode.insertBefore(cloneItems, btn);
     items = document.querySelectorAll(`.${stStr}-items`);
+    if (stStr === 'expenses'){
+      expensesItems = document.querySelectorAll(`.${stStr}-items`);
+    } else {
+      incomeItems = document.querySelectorAll(`.${stStr}-items`);
+    }
+
     if (items.length === 3){
       btn.style.display = 'none';
     }
