@@ -26,7 +26,10 @@ let startBtn = document.getElementById('start'),
     cancel = document.getElementById('cancel'),
     leftInps = document.querySelectorAll('.data input[type=text]'),
     pluses = document.querySelectorAll('.data button'),
-    data = document.querySelector('.data');
+    data = document.querySelector('.data'),
+    depositBank = document.querySelector('.deposit-bank'),
+    depositAmount = document.querySelector('.deposit-amount'),
+    depositPercent = document.querySelector('.deposit-percent');
 
 
 class AppData {
@@ -59,6 +62,7 @@ class AppData {
     // leftInps.forEach(function (item) {
     //   item.setAttribute('disabled', '1');
     // });
+
     pluses.forEach((item) => {
       item.setAttribute('disabled', true);
     });
@@ -66,22 +70,22 @@ class AppData {
     this.getExpInc();
     this.getExpensesMonth();
     this.getAddExpInc();
+    this.getInfoDeposit();
     this.getBudget();
     this.showResult();
     // appData.getInfoDeposit();
+    depositBank.setAttribute('disabled', true);
+    depositCheck.setAttribute('disabled', true);
   }
 
   addExpIncBlock(btn){
     const stStr = btn.classList[1].split('_')[0];
-    
     let items = document.querySelectorAll(`.${stStr}-items`);
     const cloneItems = items[0].cloneNode(true);
-
     let cloneInps = cloneItems.querySelectorAll('input');
       for(let i = 0; i < cloneInps.length; i++){
         cloneInps[i].value = '';
       }
-
     items[0].parentNode.insertBefore(cloneItems, btn);
     items = document.querySelectorAll(`.${stStr}-items`);
     if (stStr === 'expenses'){
@@ -89,11 +93,9 @@ class AppData {
     } else {
       incomeItems = document.querySelectorAll(`.${stStr}-items`);
     }
-
     if (items.length === 3){
       btn.style.display = 'none';
     }
-
     nameInputs = data.querySelectorAll('input[placeholder=Наименование]');
     sumInputs = data.querySelectorAll('input[placeholder=Сумма]');
     this.ruItems();
@@ -108,22 +110,17 @@ class AppData {
         this[startStr][itemTitle] = +itemAmount;
       }
     };
-
     expensesItems.forEach(count);
     incomeItems.forEach(count);
-
     for (const key in this.income) {
       this.incomeMonth += +this.income[key];
     }
   }
   
   getAddExpInc(){
-
     const count = item => {
-      console.log(item);
       let value, 
           type;
-
         if (typeof item === 'string') {
           value = item;
           type = 'addExpenses';
@@ -137,7 +134,6 @@ class AppData {
         }
         
     };
-
     const addExpenses = addExpensesItem.value.split(',');
     addExpenses.forEach(count);
     addIncomeItem.forEach(count);
@@ -169,7 +165,8 @@ class AppData {
     periodAmount.textContent = change;
   }
   getBudget() {
-    this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth;
+    const monthDeposit = this.moneyDeposit * (this.percentDeposit / 100);
+    this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth + monthDeposit;
     this.budgetDay = Math.floor(this.budgetMonth / 30);
   }
   getTargetMonth() {
@@ -210,14 +207,23 @@ class AppData {
       this.addIncome = [];
       this.expenses = {};
       this.addExpenses = [];
-      this.incomeMonth = 0,
-      this.deposit = false,
-      this.percentDeposit = 0,
-      this.moneyDeposit = 0,
-      this.budget = 0,
-      this.budgetDay = 0,
-      this.budgetMonth = 0,
+      this.incomeMonth = 0;
+      this.deposit = false;
+      this.percentDeposit = 0;
+      this.moneyDeposit = 0;
+      this.budget = 0;
+      this.budgetDay = 0;
+      this.budgetMonth = 0;
       this.expensesMonth = 0;
+
+    depositBank.removeAttribute('disabled');
+    depositBank.style.display = 'none';
+    depositBank.value = '';
+    depositAmount.style.display = 'none';
+    depositCheck.checked = false;
+    depositCheck.removeAttribute('disabled');
+    depositPercent.style.display = 'none';
+    
   }
   calcSaveMoney() {
     return this.budgetMonth * periodSelect.value;
@@ -241,9 +247,55 @@ class AppData {
     const comma = expToStr.join(', ');
     additionalExpenses.value = comma;
   }
+
+  getInfoDeposit(){
+    if (this.deposit) {
+      this.percentDeposit = depositPercent.value;
+      this.moneyDeposit = depositAmount.value;
+    }
+  }
+
+  changePercent(){
+    const valueSelect = this.value;
+    if (valueSelect === 'other') {
+      depositPercent.style.display = 'inline-block';
+      depositPercent.value = '';
+    }else {
+      depositPercent.value = valueSelect;
+      depositPercent.style.display = 'none';
+    }
+    depositPercent.addEventListener('input', (e) => {
+      if (!isNaN(parseFloat(e.target.value)) && (e.target.value > 0 && e.target.value < 100)) {
+        startBtn.removeAttribute('disabled');
+      } else {
+        startBtn.setAttribute('disabled', true);
+        depositPercent.value = '';
+        alert('Введите корректное значение в поле проценты');
+      }
+    });
+  }
+
+  depositHandler(){
+    if (depositCheck.checked){
+      depositBank.style.display = 'inline-block';
+      depositAmount.style.display = 'inline-block';
+      this.deposit = true;
+      depositBank.addEventListener('change', this.changePercent);
+    }else {
+      depositBank.style.display = 'none';
+      depositAmount.style.display = 'none';
+      depositPercent.style.display = 'none';
+      depositBank.value = '';
+      depositAmount.value = '';
+      this.deposit = false;
+      depositBank.removeEventListener('change', this.changePercent);
+    }
+  }
+
   eventsListeners() {
     cancel.addEventListener('click', this.reset.bind(this));
     startBtn.addEventListener('click', this.start.bind(this));
+    depositCheck.addEventListener('change', this.depositHandler.bind(this));
     expensesPlus.addEventListener('click', () =>{
       this.addExpIncBlock(expensesPlus);
     });
@@ -259,13 +311,13 @@ const appData = new AppData();
 appData.ruItems();
 appData.eventsListeners();
 
-
 // appData.ruItems();
 // sumInputs.forEach(function(item){
 //   item.addEventListener('input', function(){
 //     item.value = item.value.replace(/\D/, '');
 //   });
 // });
+
 
 
 
