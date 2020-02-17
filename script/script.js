@@ -348,7 +348,7 @@ class AppData {
         } 
       });
     }
-    if (a < localStorage.length) {
+    if (a < localStorage.length || a < (coockieArr.length - 1)) {
       appData.reset();
     }
     
