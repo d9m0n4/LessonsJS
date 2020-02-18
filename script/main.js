@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function(){
           timeRemaining = (dateStop - dateNow) / 1000,
           seconds = Math.floor(timeRemaining % 60) < 10 ? '0' + Math.floor(timeRemaining % 60)
                     : Math.floor(timeRemaining % 60),
-          minutes = Math.floor((timeRemaining / 60) % 60) < 10 ? Math.floor((timeRemaining / 60) % 60) 
+          minutes = Math.floor((timeRemaining / 60) % 60) < 10 ? '0' + Math.floor((timeRemaining / 60) % 60) 
                     : Math.floor((timeRemaining / 60) % 60),
           hours = Math.floor(timeRemaining / 60 / 60) < 10 ? '0' + Math.floor(timeRemaining / 60 / 60) 
                     : Math.floor(timeRemaining / 60 / 60);

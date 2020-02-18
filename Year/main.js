@@ -4,12 +4,28 @@ document.addEventListener('DOMContentLoaded', function() {
   let date = new Date(),
       week = ['Понедельник', 'Втроник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
       day = date.getDay(),
-      currentTime = date.toLocaleTimeString('en'),
       hours = date.getHours(),
       newYear = new Date('1 January 2021'),
       remainDate = Math.ceil((newYear.getTime() - date.getTime()) /1000 / 60 / 60 / 24),
       timeOfDay = '';
 
+  let a = document.createElement('span');
+  function update() {
+    let date = new Date();
+    let time = date.toLocaleTimeString('en');
+    a.innerHTML = `${timeOfDay} <br>
+    Сегодня: ${week[day - 1]} <br>
+    Текущее время: ${time} <br>
+    До Нового Года осталось: ${remainDate} дней`;
+  }
+
+  function clockStart() {
+    setInterval(update, 1000);
+    update();
+  }
+
+  clockStart();
+    
     if (hours > 3 && hours < 12) {
       timeOfDay = 'Доброе утро!';
     } else if (hours >= 12 && hours < 18) {
@@ -17,19 +33,11 @@ document.addEventListener('DOMContentLoaded', function() {
     } else if (hours >= 18 && hours <= 23) {
       timeOfDay = 'Добрый вечер!';
     } else {
-      timeOfDay = 'Доюрой ночи';
+      timeOfDay = 'Доброй ночи';
     }
 
-   let a = document.createElement('span');
-    a.innerHTML = `${timeOfDay} <br>
-    Сегодня: ${week[day - 1]} <br>
-    Текущее время: ${currentTime} <br>
-    До Нового Года осталось: ${remainDate} дней`; 
-
-
-
-  document.body.appendChild(a);
-    
+  document.body.appendChild(a); 
 });
+
 
 
