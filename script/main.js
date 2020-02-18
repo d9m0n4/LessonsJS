@@ -28,12 +28,12 @@ document.addEventListener('DOMContentLoaded', function(){
       timerSeconds.textContent = timer.seconds;
       if (timer.timeRemaining <= 0) {
         clearInterval(intervalTime);
-        timerHours.textContent = '00';
-        timerMinutes.textContent = '00';
-        timerSeconds.textContent = '00';
+        countTimer(deadline);
       }
     }
     let intervalTime = setInterval(updateClock, 1000);
+
+    
     
     updateClock();
     
