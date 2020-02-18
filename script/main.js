@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function(){
                     : Math.floor((timeRemaining / 60) % 60),
           hours = Math.floor(timeRemaining / 60 / 60) < 10 ? '0' + Math.floor(timeRemaining / 60 / 60) 
                     : Math.floor(timeRemaining / 60 / 60);
-          
           return {timeRemaining ,hours, minutes, seconds};
     }
 
@@ -26,20 +25,20 @@ document.addEventListener('DOMContentLoaded', function(){
       timerHours.textContent = timer.hours;
       timerMinutes.textContent = timer.minutes;
       timerSeconds.textContent = timer.seconds;
-      if (timer.timeRemaining <= 0) {
+      if (timer.timeRemaining < 0) {
         clearInterval(intervalTime);
-        countTimer(deadline);
+        let d = new Date(Date.parse(new Date()) + 86400 * 1000);
+        countTimer(d);
       }
     }
     let intervalTime = setInterval(updateClock, 1000);
 
     
     
-    updateClock();
-    
+    updateClock();  
     
   }
 
-countTimer('19 February 2020');
+countTimer('02 19 2020');
 });
 
