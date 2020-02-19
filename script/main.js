@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function(){
   'use strict';
 
+  // Timer //
   let date;
       date = new Date();
       date.setDate(date.getDate() + 1);
       date.setHours(0, 0, 0);
-
   function countTimer() {
     let timerHours = document.querySelector('#timer-hours'),
         timerMinutes = document.querySelector('#timer-minutes'),
@@ -38,7 +38,90 @@ document.addEventListener('DOMContentLoaded', function(){
     updateClock();  
     setInterval(updateClock, 1000);
   }
-
 countTimer();
+
+// Menu //
+const toggleMenu = () => {
+  
+const btnMenu = document.querySelector('.menu'),
+      menu = document.querySelector('menu'),
+      closeBtn = document.querySelector('.close-btn'),
+      menuItems = menu.querySelectorAll('ul>li');
+    
+    const handlerMenu = () => {
+      if (!menu.style.transform || menu.style.transform === `translate(-100%)`) {
+        menu.style.transform = `translate(0)`;
+      } else {
+        menu.style.transform = `translate(-100%)`;
+      }
+    };
+  btnMenu.addEventListener('click', handlerMenu);
+  closeBtn.addEventListener('click', handlerMenu);
+  menuItems.forEach(element => element.addEventListener('click', handlerMenu));
+}; 
+  toggleMenu();
+
+  // popup // 
+  
+  const togglePopup = () => {
+    const popup = document.querySelector('.popup'),
+          popupBtn = document.querySelectorAll('.popup-btn'),
+          popupClose = document.querySelector('.popup-close');
+
+    let count = 0,
+        requesId;
+
+    if (window.innerWidth > 768) {
+      console.log(window.innerWidth);
+
+      popupBtn.forEach(element => {
+        element.addEventListener('click', () => {
+          popup.style.display = 'block';
+          openAnim();
+        });
+      });
+
+      popupClose.addEventListener('click', () => {
+        closeAnim();
+      });
+      
+    } else {
+      popupBtn.forEach(element => {
+        element.addEventListener('click', () => {
+          popup.style.display = 'block';
+        });
+      });
+
+      popupClose.addEventListener('click', () => {
+        popup.style.display = 'none';
+      });
+    }
+    
+    function openAnim() {
+      requesId = requestAnimationFrame(openAnim);
+      if (count < 1) {
+        popup.style.opacity = count;
+        count += 0.05;
+      } else {
+        cancelAnimationFrame(requesId);
+      }
+    }
+
+    function closeAnim(){
+      requesId = requestAnimationFrame(closeAnim);
+      if (count > 0) {
+        popup.style.opacity = count;
+        count -= 0.05;
+      } else {
+        cancelAnimationFrame(requesId);
+        popup.style.display = 'none';
+      }
+    }
+    
+  };      
+
+  togglePopup();
+
 });
+
 
