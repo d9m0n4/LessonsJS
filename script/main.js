@@ -27,8 +27,9 @@ document.addEventListener('DOMContentLoaded', function(){
       timerSeconds.textContent = timer.seconds;
       if (timer.timeRemaining < 0) {
         clearInterval(intervalTime);
-        let d = new Date(Date.parse(new Date()) + 86400 * 1000);
-        countTimer(d);
+          let a = new Date();
+          a.setHours(24,0,0,0);
+        countTimer(a);
       }
     }
     let intervalTime = setInterval(updateClock, 1000);
@@ -38,7 +39,8 @@ document.addEventListener('DOMContentLoaded', function(){
     updateClock();  
     
   }
-
-countTimer('02 19 2020');
+let a = new Date();
+a.setHours(24,0,0,0);
+countTimer(a);
 });
 
