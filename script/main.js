@@ -70,40 +70,38 @@ const btnMenu = document.querySelector('.menu'),
 
     let count = 0,
         requesId;
-
-    if (window.innerWidth > 768) {
-      console.log(window.innerWidth);
+        
 
       popupBtn.forEach(element => {
         element.addEventListener('click', () => {
-          popup.style.display = 'block';
-          openAnim();
+          let clientWidth = document.documentElement.clientWidth;
+          if (clientWidth > 768) {
+            popup.style.display = 'block';
+            openAnim();
+          } else {
+            popup.removeAttribute('style')
+            popup.style.display = 'block';
+          }
         });
       });
 
       popupClose.addEventListener('click', () => {
-        closeAnim();
+        let clientWidth = document.documentElement.clientWidth;
+        if (clientWidth > 768) {
+          closeAnim();
+        } else {
+          popup.style.display = 'none';
+        }
       });
-      
-    } else {
-      popupBtn.forEach(element => {
-        element.addEventListener('click', () => {
-          popup.style.display = 'block';
-        });
-      });
-
-      popupClose.addEventListener('click', () => {
-        popup.style.display = 'none';
-      });
-    }
     
     function openAnim() {
       requesId = requestAnimationFrame(openAnim);
       if (count < 1) {
         popup.style.opacity = count;
-        count += 0.05;
+        count += 0.03;
       } else {
         cancelAnimationFrame(requesId);
+        
       }
     }
 
@@ -111,10 +109,11 @@ const btnMenu = document.querySelector('.menu'),
       requesId = requestAnimationFrame(closeAnim);
       if (count > 0) {
         popup.style.opacity = count;
-        count -= 0.05;
+        count -= 0.03;
       } else {
         cancelAnimationFrame(requesId);
         popup.style.display = 'none';
+        count = 0
       }
     }
     
