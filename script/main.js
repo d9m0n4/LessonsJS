@@ -70,7 +70,7 @@ const btnMenu = document.querySelector('.menu'),
 
     let count = 0,
         requesId;
-
+    
     if (window.innerWidth > 768) {
       console.log(window.innerWidth);
 
@@ -121,6 +121,22 @@ const btnMenu = document.querySelector('.menu'),
   };      
 
   togglePopup();
+
+  // ScrollButton // 
+  let a,
+      count = 0,
+      btnS = document.querySelector('#service-block');
+    let animScroll = () => {
+      a = requestAnimationFrame(animScroll);
+      if (count < 10) {
+        window.scrollTop += count;
+        count++;
+      } else {
+        cancelAnimationFrame(a);
+      }
+      console.log(count); 
+    };
+  btnS.addEventListener('click', animScroll());
 
 });
 
