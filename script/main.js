@@ -70,40 +70,38 @@ const btnMenu = document.querySelector('.menu'),
 
     let count = 0,
         requesId;
-    
-    if (window.innerWidth > 768) {
-      console.log(window.innerWidth);
+        
 
       popupBtn.forEach(element => {
         element.addEventListener('click', () => {
-          popup.style.display = 'block';
-          openAnim();
+          let clientWidth = document.documentElement.clientWidth;
+          if (clientWidth > 768) {
+            popup.style.display = 'block';
+            openAnim();
+          } else {
+            popup.removeAttribute('style')
+            popup.style.display = 'block';
+          }
         });
       });
 
       popupClose.addEventListener('click', () => {
-        closeAnim();
+        let clientWidth = document.documentElement.clientWidth;
+        if (clientWidth > 768) {
+          closeAnim();
+        } else {
+          popup.style.display = 'none';
+        }
       });
-      
-    } else {
-      popupBtn.forEach(element => {
-        element.addEventListener('click', () => {
-          popup.style.display = 'block';
-        });
-      });
-
-      popupClose.addEventListener('click', () => {
-        popup.style.display = 'none';
-      });
-    }
     
     function openAnim() {
       requesId = requestAnimationFrame(openAnim);
       if (count < 1) {
         popup.style.opacity = count;
-        count += 0.05;
+        count += 0.03;
       } else {
         cancelAnimationFrame(requesId);
+        
       }
     }
 
@@ -112,9 +110,11 @@ const btnMenu = document.querySelector('.menu'),
       if (count > 0) {
         popup.style.opacity = count;
         count -= 0.05;
+        
       } else {
         cancelAnimationFrame(requesId);
         popup.style.display = 'none';
+        count = 0;
       }
     }
     
@@ -122,22 +122,15 @@ const btnMenu = document.querySelector('.menu'),
 
   togglePopup();
 
-  // ScrollButton // 
-  let a,
-      count = 0,
-      btnS = document.querySelector('#service-block');
-    let animScroll = () => {
-      a = requestAnimationFrame(animScroll);
-      if (count < 10) {
-        window.scrollTop += count;
-        count++;
-      } else {
-        cancelAnimationFrame(a);
-      }
-      console.log(count); 
-    };
-  btnS.addEventListener('click', animScroll());
-
+  // Scroll Button // 
+  const startServicesBtn = document.querySelector('a[href="#service-block"]'),
+        serviceBlock = document.querySelector(`#service-block`);
+  
+  
+    startServicesBtn.addEventListener('click', (e) => {
+      e.preventDefault()
+      serviceBlock.scrollIntoView({block: 'start', behavior: 'smooth'});
+    });
 });
 
 
