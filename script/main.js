@@ -43,21 +43,24 @@ countTimer();
 // Menu //
 const toggleMenu = () => {
   
-const btnMenu = document.querySelector('.menu'),
-      menu = document.querySelector('menu'),
-      closeBtn = document.querySelector('.close-btn'),
-      menuItems = menu.querySelectorAll('ul>li');
-    
-    const handlerMenu = () => {
-      if (!menu.style.transform || menu.style.transform === `translate(-100%)`) {
-        menu.style.transform = `translate(0)`;
-      } else {
-        menu.style.transform = `translate(-100%)`;
-      }
-    };
-  btnMenu.addEventListener('click', handlerMenu);
-  closeBtn.addEventListener('click', handlerMenu);
-  menuItems.forEach(element => element.addEventListener('click', handlerMenu));
+const menu = document.querySelector('menu'), 
+      menuItems = menu.querySelectorAll('ul>li'),
+      body = document.querySelector('body');
+  
+  body.addEventListener('click', (event) => {
+    let target = event.target;
+    if (target.closest('.menu')) {
+      menu.classList.toggle('active-menu');
+    } else if (target.closest('.close-btn') || !target.closest('menu')) {
+      menu.classList.remove('active-menu');
+    } else {
+      menuItems.forEach(item => {
+        if (item.contains(target)){
+          menu.classList.toggle('active-menu');
+        }
+      });
+    }
+  });
 }; 
   toggleMenu();
 
@@ -68,10 +71,17 @@ const btnMenu = document.querySelector('.menu'),
           popupBtn = document.querySelectorAll('.popup-btn'),
           popupClose = document.querySelector('.popup-close');
 
+    popup.addEventListener('click', (event) => {
+      let target = event.target;
+      target = target.closest('.popup-content');
+        if (!target) {
+          closeAnim();
+        }
+    });
+          
     let count = 0,
         requesId;
-        
-
+      
       popupBtn.forEach(element => {
         element.addEventListener('click', () => {
           let clientWidth = document.documentElement.clientWidth;
@@ -125,8 +135,6 @@ const btnMenu = document.querySelector('.menu'),
   // Scroll Button // 
   const startServicesBtn = document.querySelector('a[href="#service-block"]'),
         serviceBlock = document.querySelector(`#service-block`);
-  
-  
     startServicesBtn.addEventListener('click', (e) => {
       e.preventDefault();
       serviceBlock.scrollIntoView({
@@ -164,7 +172,7 @@ const btnMenu = document.querySelector('.menu'),
   // });
 
   // v.2 // 
-  const scrolls = document.querySelectorAll('a[href^="#"]');
+  const scrolls = document.querySelectorAll('menu > ul > li > a');
   scrolls.forEach(anchor => {
     anchor.addEventListener('click', (e) => {
       e.preventDefault();
@@ -176,7 +184,38 @@ const btnMenu = document.querySelector('.menu'),
     });
   });
 
-  
+  // Tabs // 
+
+  const tabs = () => {
+    const tabHeader = document.querySelector('.service-header'),
+          tab = tabHeader.querySelectorAll('.service-header-tab'),
+          tabContent = document.querySelectorAll('.service-tab');
+
+    const toogleTabContent = (index) => {
+      for (let i = 0; i < tabContent.length; i++) {
+        if (index === i) {
+          tab[i].classList.add('active');
+          tabContent[i].classList.remove('d-none');
+        } else {
+          tab[i].classList.remove('active');
+          tabContent[i].classList.add('d-none');
+        }
+      }
+    };
+
+    tabHeader.addEventListener('click', (event) => {
+      let target = event.target;
+     target = target.closest('.service-header-tab');
+        if (target) {
+          tab.forEach((item, i) => {
+            if (item === target) {
+              toogleTabContent(i);
+            }
+          });   
+        }
+    });
+  };
+  tabs();
   
 
 
