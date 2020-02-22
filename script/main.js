@@ -230,14 +230,14 @@ const menu = document.querySelector('menu'),
         
     
     const sliderDots = () => {
-      for (let i = 0; i < slide.length; i++) {
+      slide.forEach((item, i) =>{
         let li = document.createElement('li');
         li.classList.add('dot');
         ul.appendChild(li);
         if (i === 0) {
           li.classList.add('dot-active');
         }
-      }
+      });
     };
     sliderDots();
 
