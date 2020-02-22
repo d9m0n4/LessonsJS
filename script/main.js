@@ -222,27 +222,27 @@ const menu = document.querySelector('menu'),
 
   const slider = () => {
     const slide = document.querySelectorAll('.portfolio-item'),
-          btn = document.querySelectorAll('.portfolio-btn'),
           slider = document.querySelector('.portfolio-content'),
-          dots = document.querySelectorAll('.portfolio-dots > li');
-          console.log(dots);
+          ul = document.querySelector('.portfolio-dots');
           
-
     let currentSlide = 0,
-        interval;
+            interval;
+        
     
     const sliderDots = () => {
-      dots.forEach((item, i) => {
+      for (let i = 0; i < slide.length; i++) {
+        let li = document.createElement('li');
+        li.classList.add('dot');
+        ul.appendChild(li);
         if (i === 0) {
-          item.classList.add('dot-active');
+          li.classList.add('dot-active');
         }
-        item.classList.add('dot');
-      });
+      }
     };
     sliderDots();
 
     let dot = document.querySelectorAll('.dot');
-
+    
     const prevSlide = (elem, index, strClass) => {
       elem[index].classList.remove(strClass);
     };
