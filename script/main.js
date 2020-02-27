@@ -443,6 +443,115 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
     calc(100);
+
+
+    //form//
+
+    const sendForm = formId =>  {
+        const errorMessage = 'Что то пошло не так';
+
+        const form = document.getElementById(formId);
+
+        const statusMessage = document.createElement('div');
+        statusMessage.style.cssText = 'font-size: 2rem';
+
+        const successBlock = document.createElement('div');
+        successBlock.style.cssText = `
+                                    width: 300px;
+                                    height: 300px;
+                                    background-image: url(./images/send/1.jpg);
+                                    background-size: cover;
+                                    margin: 0 auto;
+                                    margin-top: 10px;`;
+
+
+        const loadingSend = document.createElement('div');
+        loadingSend.style.cssText = `height: 30px; 
+                                    width: 30px; 
+                                    border-radius: 50%;
+                                    border-left: none; 
+                                    border-right: 2px solid blue;
+                                    margin: 0 auto;
+                                    margin-top: 10px;`;
+        let animate,
+            count = 0;
+        const loading = () => {
+            animate = requestAnimationFrame(loading);
+            count += 10;
+            loadingSend.style.transform = `rotate(${count}deg)`;
+        };
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            statusMessage.remove();
+            form.appendChild(loadingSend);
+            loading();
+            const formData = new FormData(form);
+            const body = {};
+            // for (const val of formData.entries()) {
+            //     body[val[0]] = val[1];
+            // }
+            formData.forEach((val, key) => {
+                body[key] = val;
+            });
+            postData(body,
+                () => {
+                    loadingSend.remove();
+                    cancelAnimationFrame(animate);
+                    form.appendChild(statusMessage);
+                    statusMessage.appendChild(successBlock);
+                    form.reset();
+                },
+                error => {
+                    loadingSend.remove();
+                    cancelAnimationFrame(animate);
+                    form.appendChild(statusMessage);
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);
+                });
+        });
+
+        const postData = (body, outputData, errorData) => {
+            const request = new XMLHttpRequest();
+            request.addEventListener('readystatechange', () => {
+                if (request.readyState !== 4) {
+                    return;
+                }
+                if (request.status === 200) {
+                    outputData();
+                } else {
+                    errorData(request.status);
+                }
+            });
+            request.open('POST', './server.php');
+            request.setRequestHeader('Content-Type', 'application/json');
+            request.send(JSON.stringify(body));
+        };
+
+    };
+    sendForm('form1');
+    sendForm('form2');
+    sendForm('form3');
+
+    const validForm = () => {
+        const inps = document.querySelectorAll('input');
+
+        inps.forEach(item => {
+            if (item.type === `tel`) {
+                item.addEventListener(`input`, () => {
+                    item.value = item.value.replace(/[^+\d]/, '');
+                });
+            }
+            if (item.type === `text`) {
+                item.addEventListener(`input`, () => {
+                    item.value = item.value.replace(/[^\sа-яА-ЯёЁ]/, '');
+                });
+            }
+        });
+
+
+    };
+    validForm();
 });
 
 
