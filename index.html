@@ -414,5 +414,70 @@
 </div>
 
 <script src="/script/main.js"></script>
+<script src="/plugins/validator/validator.js"></script>
+<script>
+	const validForm1 = new validator({
+			selector: '#form1',
+			pattern: {},
+			method: {
+			'form1-name': [
+				['notEmpty'],
+				['pattern', 'name']
+			],
+			'form1-phone': [
+				['notEmpty'],
+				['pattern', 'phone']
+			],
+			'form1-email': [
+				['notEmpty'],
+				['pattern', 'email']
+			]
+		}
+	});
+	const validForm2 = new validator({
+			selector: '#form2',
+			pattern: {},
+			method: {
+			'form2-name': [
+				['notEmpty'],
+				['pattern', 'name']
+			],
+			'form2-phone': [
+				['notEmpty'],
+				['pattern', 'phone']
+			],
+			'form2-email': [
+				['notEmpty'],
+				['pattern', 'email']
+			],
+				'form2-message': [
+				['notEmpty'],
+				['pattern', 'message']
+			]
+		}
+	});
+
+	const validForm3 = new validator({
+			selector: '#form3',
+			pattern: {},
+			method: {
+				'form3-name': [
+				['notEmpty'],
+				['pattern', 'name']
+			],
+				'form3-phone': [
+				['notEmpty'],
+				['pattern', 'phone']
+			],
+				'form3-email': [
+				['notEmpty'],
+				['pattern', 'email']
+			]
+		}
+	});
+	validForm1.init();
+	validForm2.init();
+	validForm3.init();
+</script>
 </body>
 </html>

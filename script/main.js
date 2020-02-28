@@ -533,25 +533,25 @@ document.addEventListener('DOMContentLoaded', () => {
     sendForm('form2');
     sendForm('form3');
 
-    const validForm = () => {
-        const inps = document.querySelectorAll('input');
+    // const validForm = () => {
+    //     const inps = document.querySelectorAll('input');
 
-        inps.forEach(item => {
-            if (item.type === `tel`) {
-                item.addEventListener(`input`, () => {
-                    item.value = item.value.replace(/[^+\d]/, '');
-                });
-            }
-            if (item.type === `text`) {
-                item.addEventListener(`input`, () => {
-                    item.value = item.value.replace(/[^\sа-яА-ЯёЁ]/, '');
-                });
-            }
-        });
+    //     inps.forEach(item => {
+    //         if (item.type === `tel`) {
+    //             item.addEventListener(`input`, () => {
+    //                 item.value = item.value.replace(/[^+\d]/, '');
+    //             });
+    //         }
+    //         if (item.type === `text`) {
+    //             item.addEventListener(`input`, () => {
+    //                 item.value = item.value.replace(/[^\sа-яА-ЯёЁ]/, '');
+    //             });
+    //         }
+    //     });
 
 
-    };
-    validForm();
+    // };
+    // validForm();
 });
 
 
