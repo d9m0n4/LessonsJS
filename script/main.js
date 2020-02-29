@@ -494,15 +494,22 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.forEach((val, key) => {
                 body[key] = val;
             });
-            postData(body,
-                () => {
+            postData(body)
+                .then(() => {
+                    if (formId === 'form3') {
+                        setTimeout(() => {
+                            const popup = document.querySelector('.popup');
+                            popup.style.display = 'none';
+                            successBlock.remove();
+                        }, 3000);
+                    }
                     loadingSend.remove();
                     cancelAnimationFrame(animate);
                     form.appendChild(statusMessage);
                     statusMessage.appendChild(successBlock);
                     form.reset();
-                },
-                error => {
+                })
+                .catch(error => {
                     loadingSend.remove();
                     cancelAnimationFrame(animate);
                     form.appendChild(statusMessage);
@@ -511,22 +518,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         });
 
-        const postData = (body, outputData, errorData) => {
+        const postData = body => new Promise((resolve, reject) => {
             const request = new XMLHttpRequest();
             request.addEventListener('readystatechange', () => {
                 if (request.readyState !== 4) {
                     return;
                 }
                 if (request.status === 200) {
-                    outputData();
+                    resolve();
                 } else {
-                    errorData(request.status);
+                    reject(request.status);
                 }
             });
             request.open('POST', './server.php');
             request.setRequestHeader('Content-Type', 'application/json');
             request.send(JSON.stringify(body));
-        };
+        });
 
     };
     sendForm('form1');
