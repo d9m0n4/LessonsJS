@@ -153,7 +153,7 @@ window.addEventListener('DOMContentLoaded', () => {
         scrollBtn.addEventListener('click', e => {
             e.preventDefault();
             const header = document.querySelector('.header');
-            header.scrollIntoView({ block: "center", behavior: "smooth" });
+            header.scrollIntoView({ block: "start", behavior: "smooth" });
         });
     };
     getData()
