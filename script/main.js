@@ -138,7 +138,8 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         serviceBlock.scrollIntoView({
             block: 'start',
-            behavior: 'smooth' });
+            behavior: 'smooth'
+        });
     });
 
 
@@ -307,13 +308,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         slider.addEventListener('mouseover', event => {
             if (event.target.matches('.portfolio-btn') ||
-        event.target.matches('.dot')) {
+                event.target.matches('.dot')) {
                 stopSlide();
             }
         });
         slider.addEventListener('mouseout', event => {
             if (event.target.matches('.portfolio-btn') ||
-        event.target.matches('.dot')) {
+                event.target.matches('.dot')) {
                 startSlide();
             }
         });
@@ -437,7 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const target = event.target;
 
             if (target.matches('.calc-type') || target.matches('.calc-square') ||
-             target.matches('.calc-day') || target.matches('.calc-count')) {
+                target.matches('.calc-day') || target.matches('.calc-count')) {
                 interval = requestAnimationFrame(countSum);
             }
         });
@@ -447,15 +448,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //form//
 
-    const sendForm = formId =>  {
+    const sendForm = formId => {
         const errorMessage = 'Что то пошло не так';
-
-        const form = document.getElementById(formId);
-
         const statusMessage = document.createElement('div');
-        statusMessage.style.cssText = 'font-size: 2rem';
-
         const successBlock = document.createElement('div');
+        const loadingSend = document.createElement('div');
+        const form = document.getElementById(formId);
+        statusMessage.style.cssText = 'font-size: 2rem';
         successBlock.style.cssText = `
                                     width: 300px;
                                     height: 300px;
@@ -463,9 +462,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                     background-size: cover;
                                     margin: 0 auto;
                                     margin-top: 10px;`;
-
-
-        const loadingSend = document.createElement('div');
         loadingSend.style.cssText = `height: 30px; 
                                     width: 30px; 
                                     border-radius: 50%;
@@ -487,15 +483,11 @@ document.addEventListener('DOMContentLoaded', () => {
             form.appendChild(loadingSend);
             loading();
             const formData = new FormData(form);
-            const body = {};
-            // for (const val of formData.entries()) {
-            //     body[val[0]] = val[1];
-            // }
-            formData.forEach((val, key) => {
-                body[key] = val;
-            });
-            postData(body)
-                .then(() => {
+            postData(formData)
+                .then(response => {
+                    if (response.status !== 200) {
+                        throw new Error('status network not 200');
+                    }
                     if (formId === 'form3') {
                         setTimeout(() => {
                             const popup = document.querySelector('.popup');
@@ -518,24 +510,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         });
 
-        const postData = body => new Promise((resolve, reject) => {
-            const request = new XMLHttpRequest();
-            request.addEventListener('readystatechange', () => {
-                if (request.readyState !== 4) {
-                    return;
-                }
-                if (request.status === 200) {
-                    resolve();
-                } else {
-                    reject(request.status);
-                }
-            });
-            request.open('POST', './server.php');
-            request.setRequestHeader('Content-Type', 'application/json');
-            request.send(JSON.stringify(body));
+        const postData = formData => fetch('./server.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: formData
         });
-
     };
+    const forms = document.querySelectorAll('form');
+    console.log(forms.id);
+
     sendForm('form1');
     sendForm('form2');
     sendForm('form3');
