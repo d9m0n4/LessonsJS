@@ -26,7 +26,6 @@ const sendForm = () => {
         count += 10;
         loadingSend.style.transform = `rotate(${count}deg)`;
     };
-
     BODY.addEventListener('submit', e => {
         e.preventDefault();
         const target = e.target;
@@ -50,6 +49,9 @@ const sendForm = () => {
                 cancelAnimationFrame(animate);
                 target.appendChild(statusMessage);
                 statusMessage.appendChild(successBlock);
+                setTimeout(() => {
+                    statusMessage.remove();
+                }, 3000);
                 target.reset();
             })
             .catch(error => {
@@ -64,7 +66,7 @@ const sendForm = () => {
     const postData = formData => fetch('./server.php', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json;charset=utf-8'
         },
         body: formData
     });

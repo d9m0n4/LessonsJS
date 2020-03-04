@@ -1,9 +1,15 @@
 const tabs = () => {
-    const tabHeader = document.querySelector('.service-header'),
-        tab = tabHeader.querySelectorAll('.service-header-tab'),
-        tabContent = document.querySelectorAll('.service-tab');
 
-    const toogleTabContent = index => {
+    const tabHeader = document.querySelector('.service-header'),
+        tab = document.querySelectorAll('.service-header-tab'),
+        tabContent = document.querySelectorAll('.service-tab');
+    for (let i = 0; i < tabContent.length; i++) {
+        tabContent[i].classList.add('d-none');
+        if (i === 0) {
+            tabContent[i].classList.remove('d-none');
+        }
+    }
+    const toggleTabContent = index => {
         for (let i = 0; i < tabContent.length; i++) {
             if (index === i) {
                 tab[i].classList.add('active');
@@ -14,18 +20,20 @@ const tabs = () => {
             }
         }
     };
-
     tabHeader.addEventListener('click', event => {
         let target = event.target;
         target = target.closest('.service-header-tab');
+
         if (target) {
             tab.forEach((item, i) => {
                 if (item === target) {
-                    toogleTabContent(i);
+                    toggleTabContent(i);
                 }
             });
         }
+
     });
 };
 
 export default tabs;
+
