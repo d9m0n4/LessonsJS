@@ -94,6 +94,9 @@ class Validator {
         if (!this.pattern.email) {
             this.pattern.email = /^\w+@\w+\.\w{2,}$/;
         }
+        if (!this.pattern.phone) {
+            this.pattern.phone = /^{17, }$/;
+        }
         if (!this.pattern.name) {
             this.pattern.name = /^[\sа-яА-ЯёЁ]+$/;
         }
