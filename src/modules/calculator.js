@@ -1,4 +1,4 @@
-/* eslint-disable strict */
+'use strict';
 const calc = (price = 100) => {
     const calcBlock = document.querySelector('.calc-block'),
         calcType = document.querySelector('.calc-type'),
@@ -6,8 +6,6 @@ const calc = (price = 100) => {
         calcDay = document.querySelector('.calc-day'),
         calcCount = document.querySelector('.calc-count'),
         totalValue = document.getElementById('total');
-    let count = 0,
-        interval = 0;
 
     const countSum = () => {
         let total = 0,
@@ -30,62 +28,37 @@ const calc = (price = 100) => {
             total = Math.ceil(price * typeValue * squareValue * countValue * dayValue);
         }
 
-        // const animation = () => {
-        //     // let totalNumber = +document.getElementById('total').textContent;
-        //     // const counter = totalValue.textContent;
-        //     // const iter = Math.ceil(Math.abs(totalNumber - total) / 20);
+        const sumAnimated = (current, target, progress) => {
+            totalValue.textContent =
+                Math.floor(+current + (target - current)  * progress);
+        };
+        const at = sumAnimated.bind(0, totalValue.textContent, total);
 
-        //     // if (Math.abs(total - totalNumber) < iter) {
-        //     //     totalNumber = total;
-        //     //     totalValue.textContent = +total;
-        //     // }
-        //     if (total > count) {
-        //         count++;
-        //         requestAnimationFrame(animation);
-        //     } else if (total < count) {
-        //         count--;
-        //         requestAnimationFrame(animation);
-        //     }
-        //     totalValue.textContent = +count;
+        const animate = ({ timing, draw, duration }) => {
+            const start = performance.now();
+            const animate = time => {
+                // timeFraction изменяется от 0 до 1
+                let timeFraction = (time - start) / duration;
+                if (timeFraction > 1) timeFraction = 1;
+                // вычисление текущего состояния анимации
+                const progress = timing(timeFraction);
+                draw(progress); // отрисовать её
+                if (timeFraction < 1) {
+                    requestAnimationFrame(animate);
+                }
+            };
+            requestAnimationFrame(animate);
+        };
 
-        // };
-        // requestAnimationFrame(animation);
-        interval = requestAnimationFrame(countSum);
-        if (total >= 0) {
-            totalValue.textContent = total;
-            if (count < total) {
-                count += 1;
-                totalValue.textContent = count;
-            } else if (count > total) {
-                count -= 1;
-                totalValue.textContent = count;
-            } else {
-                cancelAnimationFrame(interval);
-            }
-        }
-    // const animTotal = () => {
-    //     const interval = setInterval(() => {
-    //         time = (1000 / count);
-    //         if (count < total) {
-    //             count += 1;
-    //             totalValue.textContent = count;
-    //         } else if (count > total) {
-    //             count -= 1;
-    //             totalValue.textContent = count;
-    //         } else if (count === total) {
-    //             clearInterval(interval);
-    //         }
-    //     }, time);
-    // };
-    // animTotal();
-    // console.log(total);
+        const circ = timeFraction => 1 - Math.sin(Math.acos(timeFraction));
+        animate({ timing: circ, draw: at, duration: 900 });
     };
     calcBlock.addEventListener('change', event => {
         const target = event.target;
 
         if (target.matches('.calc-type') || target.matches('.calc-square') ||
       target.matches('.calc-day') || target.matches('.calc-count')) {
-            interval = requestAnimationFrame(countSum);
+            countSum();
         }
     });
 };

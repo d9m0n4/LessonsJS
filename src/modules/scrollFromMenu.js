@@ -1,3 +1,4 @@
+'use strict';
 // v.1 //
 // const connectBlock = document.querySelector('#connect');
 // let count = 0,

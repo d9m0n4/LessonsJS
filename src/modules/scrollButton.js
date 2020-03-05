@@ -1,3 +1,4 @@
+'use strict';
 const scrollBtn = () => {
     const startServicesBtn = document.querySelector('a[href="#service-block"]'),
         serviceBlock = document.querySelector(`#service-block`);

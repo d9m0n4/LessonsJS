@@ -1,3 +1,4 @@
+'use strict';
 const validCalcForm = () => {
     const calcblock = document.querySelector('.calc-block');
     const inputs = calcblock.querySelectorAll('input[type=number]');

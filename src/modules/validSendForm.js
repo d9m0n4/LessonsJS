@@ -1,3 +1,4 @@
+'use strict';
 const validForm = () => {
     const inps = document.querySelectorAll('input');
 

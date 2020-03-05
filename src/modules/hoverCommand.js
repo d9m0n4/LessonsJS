@@ -1,3 +1,4 @@
+'use strict';
 const ourTeam = () => {
     const commandPhoto = document.querySelectorAll('.command__photo');
     commandPhoto.forEach(item => {

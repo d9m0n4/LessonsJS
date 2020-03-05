@@ -1,3 +1,4 @@
+
 const sendForm = () => {
     const errorMessage = 'Что то пошло не так';
     const statusMessage = document.createElement('div');
@@ -35,6 +36,14 @@ const sendForm = () => {
         const formData = new FormData(target);
         postData(formData)
             .then(response => {
+                const allInputs = target.querySelectorAll('input');
+                allInputs.forEach(item => {
+                    if (item.classList.contains('error')) {
+                        target.reset();
+                        statusMessage.remove();
+                        throw new Error('ошибка в поле ввода');
+                    }
+                });
                 if (response.status !== 200) {
                     throw new Error('status network not 200');
                 }
@@ -48,6 +57,7 @@ const sendForm = () => {
                 loadingSend.remove();
                 cancelAnimationFrame(animate);
                 target.appendChild(statusMessage);
+                statusMessage.textContent = '';
                 statusMessage.appendChild(successBlock);
                 setTimeout(() => {
                     statusMessage.remove();
@@ -59,8 +69,14 @@ const sendForm = () => {
                 cancelAnimationFrame(animate);
                 target.appendChild(statusMessage);
                 statusMessage.textContent = errorMessage;
+                setTimeout(() => {
+                    statusMessage.remove();
+                }, 3000);
                 console.error(error);
             });
+        target.querySelectorAll('input').forEach(item => {
+            item.classList.remove('success');
+        });
     });
 
     const postData = formData => fetch('./server.php', {
