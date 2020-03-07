@@ -1,3 +1,4 @@
+'use strict';
 class Validator {
     constructor({ selector, pattern = {}, method }) {
         this.form = document.querySelector(selector);
@@ -92,16 +93,16 @@ class Validator {
 
     setPattern() {
         if (!this.pattern.email) {
-            this.pattern.email = /^\w+@\w+\.\w{2,}$/;
+            this.pattern.email = /^[\w  ._-\d ]+@\w+\.\w{2,}$/;
         }
         if (!this.pattern.phone) {
-            this.pattern.phone = /^{17, }$/;
+            this.pattern.phone = /^([-()+*\d]){16}$/;
         }
         if (!this.pattern.name) {
             this.pattern.name = /^[\sа-яА-ЯёЁ]+$/;
         }
         if (!this.pattern.message) {
-            this.pattern.message = /^[\sа-яА-ЯёЁ  <>,./\\|'!"№;%:?*()_+-=@#$^&/\d ]*$/;
+            this.pattern.message = /^[\sа-яА-ЯёЁ  <>,./\\|'!"№;%:?*()_+-=@#$^&/\d ]*$/; // Ввод в поле сообщение только Русских букв и символов
         }
     }
 }

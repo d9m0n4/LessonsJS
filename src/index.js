@@ -1,3 +1,4 @@
+'use strict';
 import 'nodelist-foreach-polyfill';
 import '@babel/polyfill';
 import elementClosest from 'element-closest';
@@ -60,10 +61,10 @@ const validForm1 = new Validator({
             ['notEmpty'],
             ['pattern', 'name']
         ],
-        // 'form1-phone': [
-        //     ['notEmpty'],
-        //     ['pattern', 'phone']
-        // ],
+        'form1-phone': [
+            ['notEmpty'],
+            ['pattern', 'phone']
+        ],
         'form1-email': [
             ['notEmpty'],
             ['pattern', 'email']
@@ -78,10 +79,10 @@ const validForm2 = new Validator({
             ['notEmpty'],
             ['pattern', 'name']
         ],
-        // 'form2-phone': [
-        //     ['notEmpty'],
-        //     ['pattern', 'phone']
-        // ],
+        'form2-phone': [
+            ['notEmpty'],
+            ['pattern', 'phone']
+        ],
         'form2-email': [
             ['notEmpty'],
             ['pattern', 'email']
@@ -101,10 +102,10 @@ const validForm3 = new Validator({
             ['notEmpty'],
             ['pattern', 'name']
         ],
-        // 'form3-phone': [
-        //     ['notEmpty'],
-        //     ['pattern', 'phone']
-        // ],
+        'form3-phone': [
+            ['notEmpty'],
+            ['pattern', 'phone']
+        ],
         'form3-email': [
             ['notEmpty'],
             ['pattern', 'email']
