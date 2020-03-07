@@ -25,6 +25,7 @@ import validCalcForm from './modules/validCalcForm';
 // import validSendForm from './modules/validSendForm';
 import Validator from './plugins/validator';
 import maskPhone from './plugins/maskPhone';
+import SliderCarousel from './plugins/carousel';
 // Timer //
 countTimer();
 // Menu //
@@ -115,3 +116,26 @@ const validForm3 = new Validator({
 validForm1.init();
 validForm2.init();
 validForm3.init();
+
+const options = {
+    main: '.companies-wrapper',
+    wrap: '.companies-hor',
+    slidesToShow: 4,
+    infinity: true,
+
+    responsive: [{
+        breakpoint: 1024,
+        slidesToShow: 3
+    },
+    {
+        breakpoint: 768,
+        slidesToShow: 2
+    },
+    {
+        breakpoint: 576,
+        slidesToShow: 1
+    }]
+};
+
+const carousel = new SliderCarousel(options);
+carousel.init();
