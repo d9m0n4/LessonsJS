@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #canvas {
+      border: 1px solid #000000;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="400" height="400"></canvas>
+  <br>
+  <p>Выбор цвета</p>
+  <input type="color" id="color">
+  <br>
+  <p>Толщина кисти</p>
+  <input type="range" min="1" max="10" value="1" step="1" id="size">
+  <br>
+  <canvas id="canvas-2" width="400" height="400"></canvas>
+  <script src="main.js"></script>
+</body>
+</html>
